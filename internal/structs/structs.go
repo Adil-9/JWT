@@ -11,5 +11,3 @@ type RefreshToken struct {
 	Hash   []byte
 	IP     string
 }
-
-var refreshTokensDB = map[string]RefreshToken{}
