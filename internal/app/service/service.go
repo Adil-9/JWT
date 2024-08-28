@@ -51,7 +51,26 @@ func (s *Service) GetIPData(ip string) (structs.RefreshToken, error) {
 }
 
 func (s *Service) SendWarningEmail(userID string) {
-	fmt.Printf("Sending warning email to user %s due to IP address change.\n", userID)
+	  from := "some@mail.com"
+	  password := "somepassword"
+	
+	  to := []string{
+		"tosomeemail.com",
+	  }
+	
+	  smtpHost := "smtp.gmail.com"
+	  smtpPort := "587"
+	
+	  message := []byte("This is a test email message.")
+	  
+	  auth := smtp.PlainAuth("", from, password, smtpHost)
+	  
+	  err := smtp.SendMail(smtpHost+":"+smtpPort, auth, from, to, message)
+	  if err != nil {
+		fmt.Println(err)
+		return
+	  }
+	  fmt.Println("Email Sent Successfully!")
 }
 
 func (s *Service) GenerateTokens(ip string) (string, string, error) {
