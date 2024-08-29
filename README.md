@@ -1,4 +1,4 @@
-# JWT token auth
+# JWT token auth using gin framework
 
 Foobar is a Python library for dealing with word pluralization.
 
