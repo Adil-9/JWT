@@ -3,14 +3,16 @@ package service
 import (
 	"encoding/base64"
 	"fmt"
+	errorlog "jwt/internal/app/errorLog"
 	"jwt/internal/structs"
 	"time"
+
+	"net/smtp"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
-	"net/smtp"
 )
 
 var jwtKey []byte
@@ -68,7 +70,7 @@ func (s *Service) SendWarningEmail(userID string) {
 	  
 	  err := smtp.SendMail(smtpHost+":"+smtpPort, auth, from, to, message)
 	  if err != nil {
-		fmt.Println(err)
+		errorlog.ErrorPrint("can not send email", err)
 		return
 	  }
 	  fmt.Println("Email Sent Successfully!")
@@ -98,7 +100,6 @@ func (s *Service) GenerateTokens(ip string) (string, string, error) {
 		return "", "", err
 	}
 
-	// refreshTokensDB[ip] = RefreshToken{Hash: hashedToken, IP: ip}
 	err = s.DB.PutInDB(hashedToken, ip)
 	if err != nil {
 		return "", "", err

@@ -88,18 +88,12 @@ func (e *EndPoint) Refresh(c *gin.Context) {
 		return
 	}
 
-	// storedToken, exists := refreshTokensDB[data.IP]
 	storedToken, err := e.s.GetIPData(data.IP)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid Access token"})
 		errorlog.ErrorPrint("invalid token from database", err)
 		return
 	}
-
-	// if !exists {
-	// 	c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid Refresh token"})
-	// 	return
-	// }
 
 	err = bcrypt.CompareHashAndPassword(storedToken.Hash, []byte(refreshToken))
 	if err != nil {
