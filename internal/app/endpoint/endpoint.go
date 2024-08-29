@@ -46,7 +46,6 @@ func (e *EndPoint) Access(c *gin.Context) {
 		true,
 	)
 
-	// Set the refresh token as an HttpOnly cookie
 	c.SetCookie(
 		"refresh_token",
 		refreshToken,

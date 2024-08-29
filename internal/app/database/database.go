@@ -38,7 +38,6 @@ func createTables(db *sql.DB) error {
 }
 
 func (DB *Database) PutInDB(hash []byte, ip string) error {
-	// query := "INSERT INTO refreshtoken (hash, ip) values ($1, $2)"
 	query := `INSERT INTO refreshtoken (hash, ip)
 	VALUES ($1, $2)
 	ON CONFLICT (ip)
